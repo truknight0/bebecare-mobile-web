@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public --no-clear --port 3000",
+    "start": "sirv public --no-clear --port 5000",
     "local": "rollup -c -w --environment MODE:local",
     "build-dev": "rollup -c -w --environment MODE:dev"
   },
