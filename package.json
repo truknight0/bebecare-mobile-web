@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "dev": "rollup -c -w --host 3.39.235.12",
     "start": "sirv public --no-clear --port 3000",
     "local": "rollup -c -w --environment MODE:local",
-    "build-dev": "rollup -c --host 3.39.235.12 --environment MODE:dev"
+    "build-dev": "rollup -c --environment MODE:dev"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.0",
