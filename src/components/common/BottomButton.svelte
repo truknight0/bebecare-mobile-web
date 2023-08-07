@@ -1,6 +1,7 @@
 <script>
     export let next = '';
     export let prev = '';
+    export let onClick = '';
 
     let nextDisplay = 'none';
     let prevDisplay = 'none';
@@ -16,7 +17,7 @@
 
 <div class="button-div">
     <button class="prev" style="display:{prevDisplay}" >{prev}</button>
-    <button class="next" style="display:{nextDisplay}" >{next}</button>
+    <button class="next" style="display:{nextDisplay}" on:click={onClick}>{next}</button>
 </div>
 
 <style>

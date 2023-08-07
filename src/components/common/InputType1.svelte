@@ -3,11 +3,17 @@
     export let title = '';
     export let description = '';
     export let value = '';
+    export let numberOnly = '';
+
+    let onInputNum = '';
+    if (numberOnly === 'Y') {
+        onInputNum = "this.value = this.value.replace(/[^0-9.]/g, \'\').replace(/(\\..*)\\./g, \'$1\');";
+    }
 </script>
 
 <div>
     <p>{title}</p>
-    <input type="text" autocomplete="off" name={name} placeholder={description} value={value}>
+    <input type="text" oninput={onInputNum} autocomplete="off" name={name} placeholder={description} bind:value={value} />
 </div>
 
 <style>

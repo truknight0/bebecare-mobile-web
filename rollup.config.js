@@ -9,12 +9,16 @@ import dotenv from 'dotenv';
 import replace from "@rollup/plugin-replace";
 
 dotenv.config({
-	override: true ,
+	override: true,
 	path: ".env." + process.env.MODE
 });
 
 const isLocal = process.env.IS_LOCAL;
+const baseUrl = process.env.BASE_URL;
+const apiUrl = process.env.API_ADDR;
 const production = !process.env.ROLLUP_WATCH;
+
+console.log(isLocal, baseUrl, apiUrl);
 
 function serve() {
 	let server;
@@ -46,6 +50,19 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		replace({
+			truknight: '123123',
+			// stringify the object
+			appEnv: JSON.stringify({
+				env: {
+					isLocal: isLocal,
+					BASE_URL: baseUrl,
+					API_URL: apiUrl
+				}
+			}),
+			preventAssignment: true,
+		}),
+
 		svelte({
 			compilerOptions: {
 				// enable run-time checks when not in production
@@ -65,16 +82,6 @@ export default {
 			browser: true,
 			dedupe: ['svelte'],
 			exportConditions: ['svelte']
-		}),
-
-		replace({
-			// stringify the object
-			__myapp: JSON.stringify({
-				env: {
-					"isLocal": isLocal,
-					"baseUrl": process.env.BASE_URL
-				}
-			}),
 		}),
 
 		commonjs(),
