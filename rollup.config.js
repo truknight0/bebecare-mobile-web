@@ -51,7 +51,6 @@ export default {
 	},
 	plugins: [
 		replace({
-			truknight: '123123',
 			// stringify the object
 			appEnv: JSON.stringify({
 				env: {

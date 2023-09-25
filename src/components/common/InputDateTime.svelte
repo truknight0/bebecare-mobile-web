@@ -3,22 +3,21 @@
     export let title = '';
     export let description = '';
     export let value = '';
-    export let numberOnly = '';
-
-    let onInputNum = '';
-    if (numberOnly === 'Y') {
-        onInputNum = "this.value = this.value.replace(/[^0-9.]/g, \'\').replace(/(\\..*)\\./g, \'$1\');";
-    }
 </script>
 
 <div>
     <p>{title}</p>
-    <input type="text" oninput={onInputNum} autocomplete="off" name={name} placeholder={description} bind:value={value} />
+    <span>{description}</span>
+    <input type="date" name={name} bind:value={value} />
+<!--    <input type="time" bind:value={value} />-->
 </div>
 
 <style>
     input {
-        width: 100%;
+        position: relative;
+        bottom: 15px;
+        float: right;
+        width: 35%;
         height: 40px;
         border: none;
         border-bottom: 1px solid #cccccc;
@@ -30,7 +29,7 @@
         font-size: 14px;
     }
 
-    input::placeholder {
+    span {
         color: #cccccc;
         font-size: 12px;
     }

@@ -26,6 +26,7 @@
   "dependencies": {
     "@sveltejs/kit": "^1.22.4",
     "axios": "^1.4.0",
+    "cookie": "^0.5.0",
     "process": "^0.11.10",
     "sirv-cli": "^2.0.0",
     "svelte-spa-router": "^3.3.0"

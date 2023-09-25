@@ -1,7 +1,7 @@
 <script>
-    import CommonHeader from '../common/Header.svelte'
-    import InputType1 from "../common/InputType1.svelte";
-    import BottomButton from "../common/BottomButton.svelte";
+    import CommonHeader from '../../components/common/Header.svelte'
+    import InputType1 from "../../components/common/InputType1.svelte";
+    import BottomButton from "../../components/common/BottomButton.svelte";
     import {onMount} from "svelte";
     import {
         loginUser,
@@ -9,16 +9,18 @@
         phone,
         role,
         termsAgree
-    } from "../../js/Login.js";
+    } from "../../store/Login.js";
+    import {getCookie} from "../../js/utils/Utils.js";
 
     let headerTitle = "환영합니다!";
     let headerDescription = "베베케어를 시작하기 전에<br>가입 정보 입력 및 약관 동의를 해주세요.";
 
     onMount(() => {
+        // console.log(getCookie('token'))
     })
 </script>
 
-<main>
+<div class="content">
     <div class="header-div">
         <CommonHeader title={headerTitle} description={headerDescription} />
     </div>
@@ -33,25 +35,19 @@
     </div>
     <div class="input-div terms">
         <p>약관 동의</p>
-<!--        <label for="agree1">-->
-<!--            <span>이용 약관 동의 →</span>-->
-<!--            <input type="checkbox" id="agree1" on:change={() => {agree1 = !agree1}}>-->
-<!--        </label>-->
+        <!--        <label for="agree1">-->
+        <!--            <span>이용 약관 동의 →</span>-->
+        <!--            <input type="checkbox" id="agree1" on:change={() => {agree1 = !agree1}}>-->
+        <!--        </label>-->
         <label for="agree1">
             <span>개인정보 수집 및 이용 동의 →</span>
             <input type="checkbox" id="agree1" name="terms" on:change={() => {$termsAgree = !$termsAgree}}>
         </label>
     </div>
-    <BottomButton next="다음" onClick="{loginUser}" />
-</main>
+</div>
+<BottomButton next="다음" nextOnClick="{loginUser}" />
 
 <style>
-    main {
-        padding: 1em;
-        max-width: 95%;
-        margin: 0 auto;
-    }
-
     .input-div {
         margin-top: 40px;
     }
@@ -87,9 +83,7 @@
         margin: 10px 0;
     }
 
-    @media (min-width: 640px) {
-        main {
-            max-width: none;
-        }
+    p, span {
+        font-size: 14px;
     }
 </style>

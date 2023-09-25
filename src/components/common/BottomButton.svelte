@@ -1,7 +1,8 @@
 <script>
     export let next = '';
     export let prev = '';
-    export let onClick = '';
+    export let nextOnClick = '';
+    export let prevOnClick = '';
 
     let nextDisplay = 'none';
     let prevDisplay = 'none';
@@ -16,28 +17,27 @@
 </script>
 
 <div class="button-div">
-    <button class="prev" style="display:{prevDisplay}" >{prev}</button>
-    <button class="next" style="display:{nextDisplay}" on:click={onClick}>{next}</button>
+    <button class="prev" style="display:{prevDisplay}" on:click={prevOnClick}>{prev}</button>
+    <button class="next" style="display:{nextDisplay}" on:click={nextOnClick}>{next}</button>
 </div>
 
 <style>
     .button-div {
-        top: 50px;
-        height: 100%;
-        position: relative;
+        position : relative;
+        padding-bottom: 80px;
     }
 
     .prev {
-        width:150px;
-        height:50px;
+        width: 45%;
+        height: 50px;
         border-radius: 4px;
         background-color: #f4f4f4;
         position: absolute;
     }
 
     .next {
-        width:150px;
-        height:50px;
+        width: 45%;
+        height: 50px;
         border-radius: 4px;
         background-color: #2da6cc;
         position: absolute;
