@@ -33,7 +33,7 @@ export async function getUserInfo() {
                 return;
             }
 
-            // console.log(data)
+            console.log(data)
             userIdx.set(data.idx)
             name.set(data.name);
             phone.set(data.phone);
