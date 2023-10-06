@@ -6,7 +6,7 @@
 
     let headerTitle = "초대 코드";
     let headerDescription = "전달받은 초대 코드 6자리를 입력하여<br>공동양육을 시작해보세요.";
-    let subDescription = "(초대코드는 이전 페이지에서 아이 등록 후 생성 가능합니다.)";
+    let subDescription = "(초대 코드는 이전 페이지에서 아이 등록 후 생성 가능합니다.)";
 
     function checkCode() {
 

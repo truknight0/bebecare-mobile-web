@@ -3,7 +3,8 @@
 	import login from './routes/login/Login.svelte'
 	import welcome from './routes/login/welcome.svelte'
 	import invite from './routes/login/invite.svelte'
-	import add from './routes/children/add.svelte'
+	import childrenAdd from './routes/children/add.svelte'
+	import childrenModify from './routes/children/modify.svelte'
 	import items from './routes/items/items.svelte'
 	import myInfo from './routes/infomation/my_info.svelte'
 	import myModify from './routes/infomation/my_modify.svelte'
@@ -12,7 +13,8 @@
 	const routes = {
 		'/': login,
 		'/welcome': welcome,
-		'/children/add': add,
+		'/children/add': childrenAdd,
+		'/children/modify/:idx': childrenModify,
 		'/invite': invite,
 		'/items': items,
 		'/user/info': myInfo,
@@ -21,7 +23,6 @@
 
 	// token check
 	let currentUri = location.href.replace(location.origin, '');
-	console.log(currentUri)
 	if (currentUri !== "" && currentUri !== "/") {
 		// authToken()
 	}
@@ -34,7 +35,7 @@
 <style>
 	main {
 		height: 100%;
-		padding: 1em;
+		padding: 0;
 		max-width: 95%;
 		margin: 0 auto;
 		display: flex;
@@ -49,6 +50,7 @@
 
 	:global(.content) {
 		flex: 1;
+		padding: 1em;
 		margin-bottom: 50px;
 		/*height: auto;*/
 		/*min-height: 100%;*/

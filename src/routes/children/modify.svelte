@@ -1,5 +1,5 @@
 <script>
-    import CommonHeader from "../../components/common/Header.svelte";
+    import CommonHeader2 from "../../components/common/Header2.svelte";
     import InputType1 from "../../components/common/InputType1.svelte";
     import InputType2 from "../../components/common/InputType2.svelte";
     import InputDateTime from "../../components/common/InputDateTime.svelte";
@@ -7,26 +7,33 @@
     import BottomButton from "../../components/common/BottomButton.svelte";
     import {goBack} from "../../js/utils/Utils.js";
     import {
-        childrenAdd,
+        childrenModify,
+        getChildrenInfo,
         name,
         birthday,
         gender,
         weight,
         tall,
-        headSize
+        headSize,
+        imageUrl
     } from "../../store/children.js";
+    import {onMount} from "svelte";
 
-    let headerTitle = "아이 정보";
-    let headerDescription = "양육할 아이의 정보를 입력해주세요.<br>아이 정보는 내정보에서 변경할 수 있습니다.";
+    export let params = {}  // uri params
+
     let buttons = [
         {name: '남자', key: 'M'},
         {name: '여자', key: 'F'}
     ]
+
+    onMount(() => {
+        getChildrenInfo(parseInt(params.idx))
+    })
 </script>
 
 <div class="content">
     <div class="header-div">
-        <CommonHeader title={headerTitle} description={headerDescription} />
+        <CommonHeader2 title="아이 정보 수정하기" />
     </div>
     <div class="input-div">
         <InputType1 name="name" title="이름" description="이름 또는 별명" bind:value={$name} />
@@ -51,7 +58,7 @@
         <InputType2 name="head_size" position="right" title="머리둘레(cm)" unit="cm" bind:value={$headSize} />
     </div>
 </div>
-<BottomButton prev="이전" prevOnClick="{goBack}" next="시작하기" nextOnClick="{childrenAdd}" />
+<BottomButton next="수정하기" nextOnClick="{childrenModify}" />
 
 <style>
     .empty-area {

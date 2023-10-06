@@ -53,19 +53,25 @@ export function loginUser() {
         })
     }).then(
         (response) => {
-            let api_response = response.data
-            let code = api_response.code
-            let message = api_response.message
-            let data = api_response.data
+            let apiRes = response.data
+            let code = apiRes.code
+            let message = apiRes.message
+            let data = apiRes.data
 
             if (code !== 200) {
                 alert(message)
                 return;
             }
 
-            setCookie('token', data.token, 3650)
+            setCookie('token', data.token, 365)
+            console.log(data)
             console.log(getCookie('token'))
-            window.location.href = '/#/welcome';
+
+            if (data.children != null) {
+                window.location.href = '/#/items';
+            } else {
+                window.location.href = '/#/welcome';
+            }
         },
         (error) => {
             console.log(error);
@@ -91,10 +97,10 @@ export function joinInviteCode() {
         })
     }).then(
         (response) => {
-            let api_response = response.data
-            let code = api_response.code
-            let message = api_response.message
-            let data = api_response.data
+            let apiRes = response.data
+            let code = apiRes.code
+            let message = apiRes.message
+            let data = apiRes.data
 
             if (code !== 200) {
                 alert(message)

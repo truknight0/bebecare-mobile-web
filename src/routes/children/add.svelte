@@ -1,11 +1,12 @@
 <script>
     import CommonHeader from "../../components/common/Header.svelte";
+    import CommonHeader2 from "../../components/common/Header2.svelte";
     import InputType1 from "../../components/common/InputType1.svelte";
     import InputType2 from "../../components/common/InputType2.svelte";
     import InputDateTime from "../../components/common/InputDateTime.svelte";
     import RadioButtons from "../../components/common/RadioButton.svelte";
     import BottomButton from "../../components/common/BottomButton.svelte";
-    import {goBack} from "../../js/utils/Utils.js";
+    import {isParams, goBack} from "../../js/utils/Utils.js";
     import {
         childrenAdd,
         name,
@@ -15,6 +16,8 @@
         tall,
         headSize
     } from "../../store/children.js";
+
+    let More = isParams('more');
 
     let headerTitle = "아이 정보";
     let headerDescription = "양육할 아이의 정보를 입력해주세요.<br>아이 정보는 내정보에서 변경할 수 있습니다.";
@@ -26,7 +29,11 @@
 
 <div class="content">
     <div class="header-div">
-        <CommonHeader title={headerTitle} description={headerDescription} />
+        {#if More === false}
+            <CommonHeader title={headerTitle} description={headerDescription} />
+        {:else}
+            <CommonHeader2 title="아이 추가하기" />
+        {/if}
     </div>
     <div class="input-div">
         <InputType1 name="name" title="이름" description="이름 또는 별명" bind:value={$name} />
@@ -42,7 +49,10 @@
         <span>추가 정보</span>
     </div>
     <div class="input2-div">
-        <InputType2 name="weight" position="right" title="몸무게(kg)" unit="kg" bind:value={$weight} />
+        <InputType2
+                name="weight"
+                position="right"
+                title="몸무게(kg)" unit="kg" bind:value={$weight} />
     </div>
     <div class="input2-div">
         <InputType2 name="tall" position="right" title="키(cm)" unit="cm" bind:value={$tall} />
@@ -51,7 +61,11 @@
         <InputType2 name="head_size" position="right" title="머리둘레(cm)" unit="cm" bind:value={$headSize} />
     </div>
 </div>
-<BottomButton prev="이전" prevOnClick="{goBack}" next="시작하기" nextOnClick="{childrenAdd}" />
+{#if More === false}
+    <BottomButton prev="이전" prevOnClick="{goBack}" next="시작하기" nextOnClick="{childrenAdd}" />
+{:else}
+    <BottomButton next="추가하기" nextOnClick="{childrenAdd}" />
+{/if}
 
 <style>
     .empty-area {

@@ -40,6 +40,7 @@
         height: 50px;
         border-radius: 4px;
         background-color: #2da6cc;
+        border-color: #2da6cc;
         position: absolute;
         color: #ffffff;
         right: 0;

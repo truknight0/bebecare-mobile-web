@@ -6,8 +6,12 @@
 </script>
 
 <div>
-    <p>{title}</p>
-    <span>{description}</span>
+    {#if title !== ''}
+        <p>{title}</p>
+    {/if}
+    {#if description !== ''}
+        <span>{description}</span>
+    {/if}
     <input type="date" name={name} bind:value={value} />
 <!--    <input type="time" bind:value={value} />-->
 </div>
@@ -17,7 +21,7 @@
         position: relative;
         bottom: 15px;
         float: right;
-        width: 35%;
+        width: 38%;
         height: 40px;
         border: none;
         border-bottom: 1px solid #cccccc;
