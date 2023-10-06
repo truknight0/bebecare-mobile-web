@@ -66,17 +66,14 @@ export function dateformatYmd(d, viewTime) {
 }
 
 export function changeDateFormat(sd, ed, format) {
-    const today = new Date()
-    const beginDay = new Date(sd);
-    const start = beginDay.getTime();
-
-    let end = today.getTime();
+    const start = new Date(sd);
+    let end =  new Date();
     if (typeof ed !== 'undefined' && ed !== "" && ed != null) {
         end = new Date(ed);
     }
 
     const mSec = end - start;
-    const calc_date = Math.ceil((mSec) / 24 / 60 / 60 / 1000) + 1;
+    const calc_date = Math.ceil((mSec) / 24 / 60 / 60 / 1000);
 
     if (sd === ed) return '';
 
@@ -90,11 +87,32 @@ export function changeDateFormat(sd, ed, format) {
         return_d = week + '주 ' + q + '일';
         return return_d;
     } else if (format === 'month') {
-        if (calc_date < 30) {
+        if (calc_date < 31) {
             return calc_date + '일';
         }
-        let month = Math.floor(calc_date / 30);
-        let q = calc_date % 30;
+        // 1월부터 12월까지 마지막 날짜들을 모두 구한 뒤 합하여 빼줌
+        const startMonth = start.getMonth() + 1;
+        const endMonth = end.getMonth() + 1;
+        let month = 0;
+        let cDay = 0;
+        for (let i = startMonth; i <= endMonth; i++) {
+            if (i !== startMonth) {
+                month += 1;
+            }
+
+            let lastDay = new Date(start.getFullYear(), i, 0);
+
+            if (i === startMonth) {
+                cDay += lastDay.getDate() - start.getDate();
+            } else if (i === endMonth) {
+                cDay += start.getDate();
+            } else {
+                cDay += lastDay.getDate();
+            }
+        }
+
+        // let month = Math.floor(calc_date / 31);
+        let q = calc_date - cDay;
         return_d = month + '개월 ' + q + '일';
         return return_d;
     } else if (format === 'dateTime') {
