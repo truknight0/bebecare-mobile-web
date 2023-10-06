@@ -132,7 +132,7 @@ export function setInviteCode() {
         alert("양육할 아이 등록 후 초대 코드 생성이 가능합니다.");
         return;
     }
-    // console.log(childIdx);
+    console.log(childIdx);
     axios({
         method: 'POST',
         url: API_URL + API_SERVICE_URI + '/invite/make',
@@ -140,7 +140,7 @@ export function setInviteCode() {
             Authorization: 'Bearer ' + getCookie('token'),
         },
         data: JSON.stringify({
-            children_idx: get(childIdx)
+            children_idx: childIdx
         })
     }).then(
         (response) => {
