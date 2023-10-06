@@ -33,7 +33,7 @@ export async function getUserInfo() {
                 return;
             }
 
-            console.log(data)
+            // console.log(data)
             userIdx.set(data.idx)
             name.set(data.name);
             phone.set(data.phone);
@@ -115,7 +115,9 @@ export function disconnectUser(userIdx) {
                     alert(message)
                     return;
                 }
+
                 alert("연결이 해제되었습니다.");
+                getUserInfo().then(r => {});
                 // location.reload();
                 // window.location.href = "/#/"
             },

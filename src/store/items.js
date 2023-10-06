@@ -35,6 +35,12 @@ export async function getChildrenList() {
                 return;
             }
 
+            if (data.children_list == null) {
+                alert("잘못된 접근입니다.")
+                window.location.href = '/';
+                return;
+            }
+
             let list = [];
             for (let i = 0; i < data.children_list.length; i++) {
                 if (i === 0) {
