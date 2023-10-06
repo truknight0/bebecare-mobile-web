@@ -91,25 +91,36 @@ export function changeDateFormat(sd, ed, format) {
             return calc_date + '일';
         }
         // 1월부터 12월까지 마지막 날짜들을 모두 구한 뒤 합하여 빼줌
-        const startMonth = start.getMonth() + 1;
-        const endMonth = end.getMonth() + 1;
+        const monthDiff = Math.floor(calc_date / 30);
+        let startYear = start.getFullYear();
+        let startMonth = start.getMonth() + 1;
+        let endYear = end.getFullYear();
+        let endMonth = end.getMonth() + 1;
         let month = 0;
         let cDay = 0;
-        for (let i = startMonth; i <= endMonth; i++) {
-            if (i !== startMonth) {
-                month += 1;
+        for (let i = 0; i <= monthDiff; i++) {
+            if (startMonth > 12) {
+                startYear += 1;
+                startMonth = 1;
             }
 
-            let lastDay = new Date(start.getFullYear(), i, 0);
+            let lastDay = new Date(startYear, startMonth, 0);
 
-            if (i === startMonth) {
+            if (startMonth === start.getMonth() + 1) {
                 cDay += lastDay.getDate() - start.getDate();
-            } else if (i === endMonth) {
+            } else if (startMonth === endMonth) {
                 cDay += start.getDate();
             } else {
                 cDay += lastDay.getDate();
             }
+            console.log(startMonth, lastDay.getDate(), cDay);
+
+            if (startYear === endYear && startMonth === endMonth) break;
+
+            startMonth += 1;
+            month += 1;
         }
+        console.log(calc_date, cDay);
 
         // let month = Math.floor(calc_date / 31);
         let q = calc_date - cDay;
