@@ -24,7 +24,7 @@
 	// token check
 	let currentUri = location.href.replace(location.origin, '');
 	if (currentUri !== "" && currentUri !== "/") {
-		// authToken()
+		authToken()
 	}
 </script>
 

@@ -76,7 +76,7 @@ export function changeDateFormat(sd, ed, format) {
     }
 
     const mSec = end - start;
-    const calc_date = Math.ceil((mSec) / 24 / 60 / 60 / 1000);
+    const calc_date = Math.ceil((mSec) / 24 / 60 / 60 / 1000) + 1;
 
     if (sd === ed) return '';
 
