@@ -12,6 +12,9 @@ export function responseCodeProcess(code, message, noDataReset, url) {
                     window.location.href = url;
                 }
             }
+        } else if (code === 2000 || code === 2001) {
+            // 토큰 인증 실패상태. 무조건 로그인 페이지로 보냄
+            window.location.href = '/';
         }
         return false;
     }
@@ -30,7 +33,7 @@ export function authToken() {
     // console.log(getCookie('token'));
     if (!getCookie('token')) {
         alert("잘못된 접근입니다.");
-        window.location.href = '';
+        window.location.href = '/';
         return false;
     }
 }
