@@ -1,12 +1,9 @@
 <script>
     import {eDate, eTime, itemIdx, modifyItem, sDate, sTime} from "../../store/items.js";
-    import {get} from "svelte/store";
-    import {dateformatYmd} from "../../js/utils/Utils.js";
 
     export let showModal = true;
 
     function modifyTime() {
-        console.log('123213');
         let updateStartTime = document.querySelector('input[name=start_date]').value + ' ' + document.querySelector('input[name=start_time]').value
         let updateEndTime = document.querySelector('input[name=end_date]').value + ' ' + document.querySelector('input[name=end_time]').value
 
