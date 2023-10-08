@@ -207,7 +207,7 @@ export function modifyItem(idx, startDateTime, endDateTime) {
                 idx: idx,
                 etc1: etc1Value,
                 etc2: etc2Value,
-                start_time: endDateTime,
+                start_time: startDateTime,
                 end_time: endDateTime,
             })
         }).then(

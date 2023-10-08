@@ -7,6 +7,7 @@
         let updateStartTime = document.querySelector('input[name=start_date]').value + ' ' + document.querySelector('input[name=start_time]').value
         let updateEndTime = document.querySelector('input[name=end_date]').value + ' ' + document.querySelector('input[name=end_time]').value
 
+        // console.log(updateStartTime, updateEndTime);
         modifyItem($itemIdx, updateStartTime, updateEndTime);
         showModal = false;
     }
