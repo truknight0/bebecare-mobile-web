@@ -16,6 +16,8 @@
         tall,
         headSize
     } from "../../store/children.js";
+    import {onMount} from "svelte";
+    import {getUserInfo} from "../../store/infomation.js";
 
     let More = isParams('more');
 
@@ -25,6 +27,10 @@
         {name: '남자', key: 'M'},
         {name: '여자', key: 'F'}
     ]
+
+    onMount(() => {
+        getUserInfo()
+    })
 </script>
 
 <div class="content">

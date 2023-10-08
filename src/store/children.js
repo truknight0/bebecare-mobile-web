@@ -99,13 +99,15 @@ export function childrenAdd(returnInfo) {
             let code = apiRes.code
             let message = apiRes.message
 
-            responseCodeProcess(code, message)
+            let res = responseCodeProcess(code, message)
 
-            alert("아이 정보가 등록 되었습니다.");
-            if (isParams('more') === true) {
-                window.location.href = '/#/user/info';
-            } else {
-                window.location.href = '/#/items';
+            if (res) {
+                alert("아이 정보가 등록 되었습니다.");
+                if (isParams('more') === true) {
+                    window.location.href = '/#/user/info';
+                } else {
+                    window.location.href = '/#/items';
+                }
             }
         },
         (error) => {

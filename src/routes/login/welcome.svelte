@@ -1,8 +1,14 @@
 <script>
     import CommonHeader from "../../components/common/Header.svelte";
+    import {onMount} from "svelte";
+    import {getUserInfo} from "../../store/infomation.js";
 
     let headerTitle = "처음이시군요?";
     let headerDescription = "베베케어에 처음이시군요?<br>아이를 직접 등록하거나 공동 양육자로부터 초대코드를 받아 베베케어를 시작해 볼 수 있어요.";
+
+    onMount(() => {
+        getUserInfo()
+    })
 </script>
 
 <main>
