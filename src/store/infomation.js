@@ -1,6 +1,6 @@
 import axios from "axios";
 import {API_SERVICE_URI, API_URL} from "../js/constants/Constants.js";
-import {getCookie} from "../js/utils/Utils.js";
+import {getCookie, responseCodeProcess} from "../js/utils/Utils.js";
 import {get, writable} from "svelte/store";
 
 const isPushAgree = writable(1)
@@ -28,10 +28,7 @@ export async function getUserInfo() {
             let message = apiRes.message
             let data = apiRes.data
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message, true)
 
             // console.log(data)
             userIdx.set(data.idx)
@@ -80,10 +77,7 @@ export function modifyUserInfo() {
             let message = apiRes.message
             let data = apiRes.data
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message)
             // console.log(apiRes);
             window.location.href = "/#/user/info"
         },
@@ -111,10 +105,7 @@ export function disconnectUser(userIdx) {
                 let message = apiRes.message
                 let data = apiRes.data
 
-                if (code !== 200) {
-                    alert(message)
-                    return;
-                }
+                responseCodeProcess(code, message)
 
                 alert("연결이 해제되었습니다.");
                 getUserInfo().then(r => {});
@@ -151,10 +142,7 @@ export function setInviteCode() {
             let message = apiRes.message
             let data = apiRes.data
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message)
             // console.log(apiRes);
             inviteCode.set(data.invite_code)
 
@@ -183,10 +171,7 @@ export function deleteUser() {
                 let message = apiRes.message
                 let data = apiRes.data
 
-                if (code !== 200) {
-                    alert(message)
-                    return;
-                }
+                responseCodeProcess(code, message)
                 window.location.href = "/";
             },
             (error) => {

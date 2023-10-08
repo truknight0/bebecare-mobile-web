@@ -1,7 +1,7 @@
 import {writable, get} from "svelte/store";
 import {BASE_URL, API_NOAUTH_URI, API_SERVICE_URI, API_URL} from "../js/constants/Constants.js";
 import axios from "axios";
-import {isEmpty, setCookie, getCookie, isParams} from "../js/utils/Utils.js";
+import {isEmpty, setCookie, getCookie, isParams, responseCodeProcess} from "../js/utils/Utils.js";
 import {tick} from "svelte";
 
 export const childrenIdx = writable();
@@ -56,11 +56,7 @@ export function getChildrenInfo(idx) {
             let message = apiRes.message
             let data = apiRes.data
 
-            if (code !== 200) {
-                alert(message)
-                window.location.href = '/#/user/info';
-                return;
-            }
+            responseCodeProcess(code, message, false, '/#/user/info')
 
             childrenIdx.set(data.idx);
             name.set(data.name);
@@ -103,10 +99,7 @@ export function childrenAdd(returnInfo) {
             let code = apiRes.code
             let message = apiRes.message
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message)
 
             alert("아이 정보가 등록 되었습니다.");
             if (isParams('more') === true) {
@@ -148,10 +141,7 @@ export function childrenModify() {
             let code = apiRes.code
             let message = apiRes.message
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message)
 
             window.location.href = '/#/user/info';
         },

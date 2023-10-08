@@ -1,5 +1,31 @@
 import {DEVELOPER_MAIL} from "../constants/Constants.js";
 
+export function responseCodeProcess(code, message, noDataReset, url) {
+    if (code !== 200) {
+        alert(message);
+        if (code === 1000) {
+            if (noDataReset === true) {
+                deleteCookie('token')
+                window.location.href = '/';
+            } else {
+                if (url !== "") {
+                    window.location.href = url;
+                }
+            }
+        }
+        return false;
+    }
+
+    return true;
+}
+
+export function autoLogin() {
+    if (getCookie('token') !== "") {
+        window.location.href = '/#/items';
+        return false;
+    }
+}
+
 export function authToken() {
     // console.log(getCookie('token'));
     if (!getCookie('token')) {
@@ -65,7 +91,7 @@ export function dateformatYmd(d, viewTime) {
     return year + '-' + month + '-' + day;
 }
 
-export function changeDateFormat(sd, ed, format) {
+export function changeDateFormat(sd, ed, format, defaultStr) {
     const start = new Date(sd);
     let end =  new Date();
     if (typeof ed !== 'undefined' && ed !== "" && ed != null) {
@@ -76,6 +102,10 @@ export function changeDateFormat(sd, ed, format) {
     const calc_date = Math.ceil((mSec) / 24 / 60 / 60 / 1000);
 
     if (sd === ed) return '';
+
+    if (typeof  defaultStr == 'undefined' || defaultStr == null || defaultStr == "") {
+        defaultStr = '방금';
+    }
 
     let return_d;
     if (format === 'week') {
@@ -120,14 +150,14 @@ export function changeDateFormat(sd, ed, format) {
             startMonth += 1;
             month += 1;
         }
-        console.log(calc_date, cDay);
+        // console.log(calc_date, cDay);
 
         // let month = Math.floor(calc_date / 31);
         let q = calc_date - cDay;
         return_d = month + '개월 ' + q + '일';
         return return_d;
     } else if (format === 'dateTime') {
-        return_d = changeMicroTimeToDateTime(mSec, '방금');
+        return_d = changeMicroTimeToDateTime(mSec, defaultStr);
         return return_d;
     }
 
@@ -143,9 +173,9 @@ export function changeBetweenDateMicroTime(sd, ed) {
     return end - start;
 }
 
-export function changeMicroTimeToDateTime(mt, zeroStr) {
+export function changeMicroTimeToDateTime(mt, str) {
     if (mt === 0 || mt == null) {
-        if (zeroStr) return zeroStr;
+        if (str) return str;
         else return '';
     }
 
@@ -168,8 +198,8 @@ export function changeMicroTimeToDateTime(mt, zeroStr) {
     }
 
     if (min === 0) {
-        if (zeroStr) {
-            min = zeroStr;
+        if (str) {
+            min = str;
         } else {
             min = '';
         }
@@ -200,4 +230,7 @@ export function setCookie(name, value, exp) {
 export function getCookie(name) {
     let value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
     return value ? value[2] : null;
+}
+export function deleteCookie(name) {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }

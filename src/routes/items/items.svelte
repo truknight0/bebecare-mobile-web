@@ -3,6 +3,7 @@
     import SelectBox from "../../components/common/SelectBox.svelte";
     import RadioButtonGray from "../../components/common/RadioButton-Gray.svelte";
     import InputType2 from "../../components/common/InputType2.svelte";
+    import ChangeDateModal from "../../components/Modal/ChangeDateModel.svelte";
     import {
         getChildrenList,
         getItemList,
@@ -20,12 +21,13 @@
         sleepTime,
         milkPowder,
         milkTime,
-        babyFood
+        babyFood, sDate, eDate, sTime, eTime, itemIdx
     } from "../../store/items.js";
     import {
         changeDateFormat,
         dateformatYmd
     } from "../../js/utils/Utils.js";
+    import {get, writable} from "svelte/store";
 
     let itemTypes = [
         {class: 'all', name: '전체', icon: null},
@@ -44,6 +46,9 @@
         {name: '양쪽', key: '양쪽'},
     ]
 
+    let showModal = false;
+    $: sDate
+
     onMount(() => {
         getChildrenList();
     })
@@ -57,8 +62,22 @@
 
         return false;
     }
+
+    const toggleModal = (day1, day2, idx) => {
+        if (typeof idx != 'undefined' && idx !== null) {
+            let sDaySplit = day1.split(" ");
+            let eDaySplit = day2.split(" ");
+            sDate.set(sDaySplit[0]);
+            sTime.set(sDaySplit[1]);
+            eDate.set(eDaySplit[0]);
+            eTime.set(eDaySplit[1]);
+            itemIdx.set(idx);
+        }
+        showModal = !showModal;
+    }
 </script>
 
+<ChangeDateModal {showModal} on:click={toggleModal} />
 <div class="content">
     <div class="header-div">
         <table class="top-tbl">
@@ -130,25 +149,25 @@
                                             <div style="margin-top: 10px;">
                                                 {#if item.type === 'A'}
                                                     <RadioButtonGray name="etc1_{item.idx}" title="선택:" buttons={etc1Buttons} bind:value={item.etc1} />
-                                                    <button class="item-complete-button" on:click={modifyItem(item.idx, dateformatYmd('now', true))}>완료</button>
+                                                    <button class="item-complete-button" on:click={modifyItem(item.idx, item.start_time, dateformatYmd('now', true))}>완료</button>
                                                 {:else if item.type === 'F'}
-                                                    <button class="item-complete-button" on:click={modifyItem(item.idx, dateformatYmd('now', true))}>완료</button>
+                                                    <button class="item-complete-button" on:click={modifyItem(item.idx, item.start_time, dateformatYmd('now', true))}>완료</button>
                                                 {:else if item.type === 'G'}
-                                                    <button class="item-complete-button" on:click={modifyItem(item.idx, dateformatYmd('now', true))}>완료</button>
+                                                    <button class="item-complete-button" on:click={modifyItem(item.idx, item.start_time, dateformatYmd('now', true))}>완료</button>
                                                 {/if}
                                             </div>
                                         </div>
                                     </div>
                                 {:else}
                                     <div class="item-head item-head-complete">
-                                        <span>{item.start_time}</span>
+                                        <span on:click={toggleModal(item.start_time, item.end_time, item.idx)}>{item.start_time}</span>
                                         <button on:click={deleteItem(item.idx)}><img src="/images/icon/icon-delete-white.png" alt="삭제"></button>
                                     </div>
                                     <div class="item-content item-content-complete">
                                         <div class="item-content-inner">
                                             <span class="complete-span">{item.name}</span>
                                             {#if item.end_time != null && item.start_time !== item.end_time}
-                                                <span class="small-span-gray">{changeDateFormat(item.start_time, item.end_time, 'dateTime')}</span>
+                                                <span class="small-span-gray">{changeDateFormat(item.start_time, item.end_time, 'dateTime', '1분')}</span>
                                             {/if}
                                             {#if item.etc2 != null}
                                                 <span class="small-span-gray">{item.etc2}ml</span>

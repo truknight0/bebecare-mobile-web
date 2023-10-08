@@ -8,7 +8,7 @@
 	import items from './routes/items/items.svelte'
 	import myInfo from './routes/infomation/my_info.svelte'
 	import myModify from './routes/infomation/my_modify.svelte'
-	import {authToken} from "./js/utils/Utils.js";
+	import {authToken, autoLogin} from "./js/utils/Utils.js";
 
 	const routes = {
 		'/': login,
@@ -23,6 +23,9 @@
 
 	// token check
 	let currentUri = location.href.replace(location.origin, '');
+	if (currentUri === "" || currentUri === "/") {
+		autoLogin()
+	}
 	if (currentUri !== "" && currentUri !== "/") {
 		authToken()
 	}

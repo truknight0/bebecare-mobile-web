@@ -1,7 +1,7 @@
 import {writable, get} from "svelte/store";
 import {BASE_URL, API_NOAUTH_URI, API_SERVICE_URI, API_URL} from "../js/constants/Constants.js";
 import axios from "axios";
-import {isEmpty, setCookie, getCookie} from "../js/utils/Utils.js";
+import {isEmpty, setCookie, getCookie, responseCodeProcess} from "../js/utils/Utils.js";
 import {tick} from "svelte";
 
 const isPushAgree = writable(1);
@@ -58,10 +58,7 @@ export function loginUser() {
             let message = apiRes.message
             let data = apiRes.data
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message)
 
             setCookie('token', data.token, 365)
             console.log(data)
@@ -102,10 +99,7 @@ export function joinInviteCode() {
             let message = apiRes.message
             let data = apiRes.data
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message)
 
             window.location.href = '/#/items';
         },

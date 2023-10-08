@@ -1,6 +1,13 @@
 import axios from "axios";
 import {API_SERVICE_URI, API_URL} from "../js/constants/Constants.js";
-import {changeBetweenDateMicroTime, changeMicroTimeToDateTime, dateformatYmd, getCookie} from "../js/utils/Utils.js";
+import {
+    changeBetweenDateMicroTime,
+    changeMicroTimeToDateTime,
+    dateformatYmd,
+    deleteCookie,
+    getCookie,
+    responseCodeProcess
+} from "../js/utils/Utils.js";
 import {get, writable} from "svelte/store";
 
 export const userIdx = writable(0);
@@ -16,6 +23,13 @@ export const milkPowder = writable('0ml');
 export const milkTime = writable('0시간 0분');
 export const babyFood = writable('0ml');
 
+
+export const itemIdx = writable();
+export const sDate = writable();
+export const sTime = writable();
+export const eDate = writable();
+export const eTime = writable();
+
 export async function getChildrenList() {
     await axios({
         method: 'POST',
@@ -30,10 +44,7 @@ export async function getChildrenList() {
             let message = apiRes.message
             let data = apiRes.data
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message, true)
 
             if (data.children_list == null) {
                 alert("잘못된 접근입니다.")
@@ -86,39 +97,38 @@ export async function getItemList(childrenIdx, type, searchDate) {
             let message = apiRes.message
             let data = apiRes.data
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message)
             // console.log(data);
             let milkPowderSum = 0;
             let babyFoodSum = 0;
             let milkTimeSum = 0;
             let napTimeSum = 0;
             let sleepTimeSum = 0;
-            for (let i = 0; i < data.length; i++) {
-                let etc2Num = 0;
-                if (data[i].etc2 != null) {
-                    etc2Num = parseInt(data[i].etc2);
-                }
-                switch (data[i].type) {
-                    case 'A' :
-                        milkTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
-                        break;
-                    case 'B' :
-                        milkPowderSum += etc2Num;
-                        break;
-                    case 'C' :
-                        babyFoodSum += etc2Num;
-                        break;
-                    case 'F' :
-                        napTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
-                        break;
-                    case 'G' :
-                        sleepTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
-                        break;
-                    default :
-                        break;
+            if (data !== null) {
+                for (let i = 0; i < data.length; i++) {
+                    let etc2Num = 0;
+                    if (data[i].etc2 != null) {
+                        etc2Num = parseInt(data[i].etc2);
+                    }
+                    switch (data[i].type) {
+                        case 'A' :
+                            milkTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
+                            break;
+                        case 'B' :
+                            milkPowderSum += etc2Num;
+                            break;
+                        case 'C' :
+                            babyFoodSum += etc2Num;
+                            break;
+                        case 'F' :
+                            napTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
+                            break;
+                        case 'G' :
+                            sleepTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
+                            break;
+                        default :
+                            break;
+                    }
                 }
             }
 
@@ -166,10 +176,7 @@ export function insertItem(e) {
             let code = apiRes.code
             let message = apiRes.message
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message)
 
             getItemList(get(childrenIdx), get(type), get(searchDate)).then(r => {});
         },
@@ -179,7 +186,7 @@ export function insertItem(e) {
     );
 }
 
-export function modifyItem(idx, endDateTime) {
+export function modifyItem(idx, startDateTime, endDateTime) {
     const etc1 = document.querySelector('input[name=etc1_' + idx + ']:checked');
     const etc2 = document.querySelector('input[name=etc2_' + idx + ']');
     // console.log(etc1.value);
@@ -200,6 +207,7 @@ export function modifyItem(idx, endDateTime) {
                 idx: idx,
                 etc1: etc1Value,
                 etc2: etc2Value,
+                start_time: endDateTime,
                 end_time: endDateTime,
             })
         }).then(
@@ -208,10 +216,7 @@ export function modifyItem(idx, endDateTime) {
                 let code = apiRes.code
                 let message = apiRes.message
 
-                if (code !== 200) {
-                    alert(message)
-                    return;
-                }
+                responseCodeProcess(code, message)
 
                 getItemList(get(childrenIdx), get(type), get(searchDate)).then(r => {});
             },
@@ -238,10 +243,7 @@ export function completeItem(idx) {
             let code = apiRes.code
             let message = apiRes.message
 
-            if (code !== 200) {
-                alert(message)
-                return;
-            }
+            responseCodeProcess(code, message)
 
             getItemList(get(childrenIdx), get(type), get(searchDate)).then(r => {});
         },
@@ -268,10 +270,7 @@ export function deleteItem(idx) {
                 let code = apiRes.code
                 let message = apiRes.message
 
-                if (code !== 200) {
-                    alert(message)
-                    return;
-                }
+                responseCodeProcess(code, message)
 
                 getItemList(get(childrenIdx), get(type), get(searchDate)).then(r => {});
             },
