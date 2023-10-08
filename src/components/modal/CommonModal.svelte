@@ -1,12 +1,11 @@
 <script>
     export let showModal = true;
-    export let isPromo = true;
     export let title = '';
     export let content = '';
 </script>
 
 {#if showModal}
-    <div class="backdrop" class:promo={isPromo}>
+    <div class="backdrop">
         <div class="modal">
             <h1>{title}</h1>
             <span>{content}</span>
@@ -31,10 +30,5 @@
         margin: 10% auto;
         text-align: center;
         background: white;
-    }
-
-    .promo .modal {
-        background: crimson;
-        color: white;
     }
 </style>
