@@ -3,7 +3,7 @@
     import SelectBox from "../../components/common/SelectBox.svelte";
     import RadioButtonGray from "../../components/common/RadioButton-Gray.svelte";
     import InputType2 from "../../components/common/InputType2.svelte";
-    import ChangeDateModal from "../../components/Modal/ChangeDateModel.svelte";
+    import ChangeDateModal from "../../components/modal/ChangeDateModal.svelte";
     import {
         getChildrenList,
         getItemList,
