@@ -20,7 +20,7 @@ export function responseCodeProcess(code, message, noDataReset, url) {
 }
 
 export function autoLogin() {
-    if (getCookie('token') !== "") {
+    if (getCookie('token') !== "" && getCookie('token') !== null) {
         window.location.href = '/#/items';
         return false;
     }
@@ -30,7 +30,7 @@ export function authToken() {
     // console.log(getCookie('token'));
     if (!getCookie('token')) {
         alert("잘못된 접근입니다.");
-        window.location.href = '/';
+        window.location.href = '';
         return false;
     }
 }
