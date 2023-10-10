@@ -34,15 +34,15 @@
         <InputType1 name="role" title="역할" bind:value={$role} description="아이와 양육자간의 관계"/>
     </div>
     <div class="input-div terms">
-        <p>약관 동의</p>
+<!--        <p>약관 동의</p>-->
         <!--        <label for="agree1">-->
         <!--            <span>이용 약관 동의 →</span>-->
         <!--            <input type="checkbox" id="agree1" on:change={() => {agree1 = !agree1}}>-->
         <!--        </label>-->
-        <label for="agree1">
-            <span>개인정보 수집 및 이용 동의 →</span>
-            <input type="checkbox" id="agree1" name="terms" on:change={() => {$termsAgree = !$termsAgree}}>
-        </label>
+<!--        <label for="agree1">-->
+<!--            <span>개인정보 수집 및 이용 동의 →</span>-->
+<!--            <input type="checkbox" id="agree1" name="terms" on:change={() => {$termsAgree = !$termsAgree}}>-->
+<!--        </label>-->
     </div>
 </div>
 <BottomButton next="다음" nextOnClick="{loginUser}" />

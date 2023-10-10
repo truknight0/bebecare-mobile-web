@@ -8,7 +8,7 @@ const isPushAgree = writable(1);
 export const name = writable('');
 export const phone = writable('');
 export const role = writable('');
-export const termsAgree = writable(false);
+export const termsAgree = writable(true);
 export const inviteCode = writable();
 
 export function loginUser() {
@@ -61,8 +61,8 @@ export function loginUser() {
             responseCodeProcess(code, message)
 
             setCookie('token', data.token, 365)
-            console.log(data)
-            console.log(getCookie('token'))
+            // console.log(data)
+            // console.log(getCookie('token'))
 
             if (data.children != null) {
                 window.location.href = '/#/items';
