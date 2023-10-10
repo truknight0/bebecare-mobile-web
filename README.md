@@ -1,4 +1,4 @@
-# Bebecare mobile web for Svelte
+# Bebecare mobile web with Svelte
 
 이 웹 서비스는 front framework Svelte 4.0.0 으로 개발 되었습니다.
 
