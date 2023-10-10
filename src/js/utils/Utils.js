@@ -30,7 +30,7 @@ export function autoLogin() {
 }
 
 export function authToken() {
-    console.log(getCookie('token'));
+    // console.log(getCookie('token'));
     if (!getCookie('token')) {
         alert("잘못된 접근입니다.");
         window.location.href = '/';
@@ -201,7 +201,7 @@ export function changeMicroTimeToDateTime(mt, str) {
     }
 
     if (min === 0) {
-        if (str && date ===0 && hour === 0) {
+        if (str && date === '' &&  hour === '') {
             min = str;
         } else {
             min = '';
