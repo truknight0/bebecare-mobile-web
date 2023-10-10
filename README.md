@@ -1,107 +1,48 @@
-# This repo is no longer maintained. Consider using `npm init vite` and selecting the `svelte` option or — if you want a full-fledged app framework — use [SvelteKit](https://kit.svelte.dev), the official application framework for Svelte.
+# Bebecare mobile web for Svelte
 
----
+이 웹 서비스는 front framework Svelte 4.0.0 으로 개발 되었습니다.
 
-# svelte app
+이 서비스는 local 과 dev 두가지 환경을 제공합니다.
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template.
+## Local service up
 
-To create a new project based on this template using [degit](https://github.com/Rich-Harris/degit):
+local 환경에서 해당 서비스를 실행하기 위해 하단의 절차를 따르십시오.
+
+(이 서비스는 node.js 설치가 필수적으로 요구됩니다. 다음의 링크로 이동해 node.js 설치 후 하단의 절차를 따르십시오. https://nodejs.org/ko)
+
 
 ```bash
-npx degit sveltejs/template svelte-app
-cd svelte-app
-```
-
-*Note that you will need to have [Node.js](https://nodejs.org) installed.*
-
-
-## Get started
-
-Install the dependencies...
-
-```bash
-cd svelte-app
+cd bebecare-mobile-web #project location
 npm install
+npm run local
 ```
 
-...then start [Rollup](https://rollupjs.org):
+## Dev server service up
+
+dev server 환경에서 서비스를 실행하기 위해 하단의 절차를 따르십시오.
+
+(해당 서비스는 Ubuntu 18.04 및 20.04 에서 테스트 되었습니다.)
 
 ```bash
-npm run dev
+cd bebecare-mobile-web #project location
+npm install
+npm run build-dev
 ```
 
-Navigate to [localhost:8080](http://localhost:8080). You should see your app running. Edit a component file in `src`, save it, and reload the page to see your changes.
-
-By default, the server will only respond to requests from localhost. To allow connections from other computers, edit the `sirv` commands in package.json to include the option `--host 0.0.0.0`.
-
-If you're using [Visual Studio Code](https://code.visualstudio.com/) we recommend installing the official extension [Svelte for VS Code](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode). If you are using other editors you may need to install a plugin in order to get syntax highlighting and intellisense.
-
-## Building and running in production mode
-
-To create an optimised version of the app:
+npm background 실행을 위해 빌드 전 다음을 수행하십시오.
 
 ```bash
-npm run build
+(nohup npm run build-dev &)
 ```
 
-You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
+## Etc...
 
-
-## Single-page app mode
-
-By default, sirv will only respond to requests that match files in `public`. This is to maximise compatibility with static fileservers, allowing you to deploy your app anywhere.
-
-If you're building a single-page app (SPA) with multiple routes, sirv needs to be able to respond to requests for *any* path. You can make it so by editing the `"start"` command in package.json:
-
-```js
-"start": "sirv public --single"
-```
-
-## Using TypeScript
-
-This template comes with a script to set up a TypeScript development environment, you can run it immediately after cloning the template with:
-
+* 각 서비스 환경에 따라 .env 파일을 제공합니다. 해당 환경에 대한 설정은 rollup.config.js 파일을 확인하십시오.
+* npm 패키지 버전에 대한 상세한 내용은 지원하지 않습니다. 호환성 오류는 npm update 를 참고하십시오.
+* nohup 에 의한 process 실행을 중단할 경우 다음을 참고하십시오.
 ```bash
-node scripts/setupTypeScript.js
+ps -ef | grep node* #search for node process to this project directory
+kill -9 {PID}
 ```
 
-Or remove the script via:
-
-```bash
-rm scripts/setupTypeScript.js
-```
-
-If you want to use `baseUrl` or `path` aliases within your `tsconfig`, you need to set up `@rollup/plugin-alias` to tell Rollup to resolve the aliases. For more info, see [this StackOverflow question](https://stackoverflow.com/questions/63427935/setup-tsconfig-path-in-svelte).
-
-## Deploying to the web
-
-### With [Vercel](https://vercel.com)
-
-Install `vercel` if you haven't already:
-
-```bash
-npm install -g vercel
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-vercel deploy --name my-project
-```
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public my-project.surge.sh
-```
+END
