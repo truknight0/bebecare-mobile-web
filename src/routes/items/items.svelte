@@ -194,18 +194,20 @@
             {/each}
         {/if}
     </div>
-    <div class="bottom-btn-area">
-        <ul>
-            {#each itemTypes as li}
-                {#if li.icon !== null}
-                    <li>
-                        <button class="item-add-{li.class}" on:click={insertItem} data-type="{li.class}"><img src="{li.icon}" data-type="{li.class}" alt="{li.name}" /></button>
-                        <div style="text-align: center;"><span style="font-size: 12px;">{li.name}</span></div>
-                    </li>
-                {/if}
-            {/each}
-        </ul>
-    </div>
+    {#if (dateformatYmd('now') === $searchDate)}
+        <div class="bottom-btn-area">
+            <ul>
+                {#each itemTypes as li}
+                    {#if li.icon !== null}
+                        <li>
+                            <button class="item-add-{li.class}" on:click={insertItem} data-type="{li.class}"><img src="{li.icon}" data-type="{li.class}" alt="{li.name}" /></button>
+                            <div style="text-align: center;"><span style="font-size: 12px;">{li.name}</span></div>
+                        </li>
+                    {/if}
+                {/each}
+            </ul>
+        </div>
+    {/if}
 </div>
 
 <style>

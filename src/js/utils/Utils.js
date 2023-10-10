@@ -201,7 +201,7 @@ export function changeMicroTimeToDateTime(mt, str) {
     }
 
     if (min === 0) {
-        if (str) {
+        if (str && date ===0 && hour === 0) {
             min = str;
         } else {
             min = '';
