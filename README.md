@@ -1,6 +1,6 @@
 # Bebecare mobile web with Svelte
 
-이 웹 서비스는 front framework Svelte 4.0.0 으로 개발 되었습니다.
+이 웹 서비스는 front framework Svelte 4.0.0 으로 개발되었습니다.
 
 이 서비스는 local 과 dev 두가지 환경을 제공합니다.
 
