@@ -34,16 +34,22 @@
         {class: 'A', name: '모유', icon: '/images/icon/icon-A.png'},
         {class: 'B', name: '분유', icon: '/images/icon/icon-B.png'},
         {class: 'C', name: '이유식', icon: '/images/icon/icon-C.png'},
+        {class: 'H', name: '약', icon: '/images/icon/icon-H.png'},
         {class: 'D', name: '소변', icon: '/images/icon/icon-D.png'},
         {class: 'E', name: '대변', icon: '/images/icon/icon-E.png'},
         {class: 'F', name: '낮잠', icon: '/images/icon/icon-F.png'},
-        {class: 'G', name: '밤잠', icon: '/images/icon/icon-G.png'}
+        {class: 'G', name: '밤잠', icon: '/images/icon/icon-G.png'},
     ]
 
     let etc1Buttons = [
         {name: '왼쪽', key: '왼쪽'},
         {name: '오른쪽', key: '오른쪽'},
         {name: '양쪽', key: '양쪽'},
+    ]
+
+    let etc3Buttons = [
+        {name: '경구투여', key: '경구투여'},
+        {name: '연고', key: '연고'}
     ]
 
     let showModal = false;
@@ -131,7 +137,7 @@
                         <tr>
                             <td style="width: 20%; white-space: normal;">
                                 <div class="icon-{item.type}">
-                                    <img src="/images/icon/icon-{item.type}.png" alt="{item.name}" />
+                                    <img src="/images/icon/icon-{item.type}.png" alt="{item.name}" style="width: 30px;" />
                                 </div>
                                 <div class="item-date-time">
                                     <span>{changeDateFormat(item.start_time, null, 'dateTime')} 전</span>
@@ -176,6 +182,9 @@
                                                 {#if item.type === 'A'}
                                                     <RadioButtonGray name="etc1_{item.idx}" title="선택:" buttons={etc1Buttons} bind:value={item.etc1} />
                                                     <button class="item-modify-button" on:click={modifyItem(item.idx)}>수정</button>
+                                                {:else if item.type === 'H'}
+                                                    <RadioButtonGray name="etc3_{item.idx}" title="선택:" buttons={etc3Buttons} bind:value={item.etc3} />
+                                                    <button class="item-modify-button" on:click={modifyItem(item.idx)}>수정</button>
                                                 {:else if item.type === 'B'}
                                                     <InputType2 title="먹은 양:" name="etc2_{item.idx}" bind:value={item.etc2} numberOnly="Y" unit="ml" />
                                                     <button class="item-modify-button" on:click={modifyItem(item.idx)}>수정</button>
@@ -200,7 +209,7 @@
                 {#each itemTypes as li}
                     {#if li.icon !== null}
                         <li>
-                            <button class="item-add-{li.class}" on:click={insertItem} data-type="{li.class}"><img src="{li.icon}" data-type="{li.class}" alt="{li.name}" /></button>
+                            <button class="item-add-{li.class}" on:click={insertItem} data-type="{li.class}"><img src="{li.icon}" data-type="{li.class}" alt="{li.name}" style="width:30px;" /></button>
                             <div style="text-align: center;"><span style="font-size: 12px;">{li.name}</span></div>
                         </li>
                     {/if}
@@ -332,6 +341,10 @@
 
     .item-tbl .icon-G, .bottom-btn-area .item-add-G {
         background-color: #563df8;
+    }
+
+    .item-tbl .icon-H, .bottom-btn-area .item-add-H {
+        background-color: #cff393;
     }
 
     .item-tbl .item-head {

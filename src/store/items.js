@@ -189,12 +189,15 @@ export function insertItem(e) {
 export function modifyItem(idx, startDateTime, endDateTime) {
     const etc1 = document.querySelector('input[name=etc1_' + idx + ']:checked');
     const etc2 = document.querySelector('input[name=etc2_' + idx + ']');
+    const etc3 = document.querySelector('input[name=etc3_' + idx + ']:checked');
     // console.log(etc1.value);
     // return false;
     let etc1Value = null;
     let etc2Value = null;
+    let etc3Value = null;
     if (etc1 != null) etc1Value = etc1.value;
     if (etc2 != null) etc2Value = etc2.value;
+    if (etc3 != null) etc3Value = etc3.value;
 
     if (confirm("수정 하시겠습니까?")) {
         axios({
@@ -207,6 +210,7 @@ export function modifyItem(idx, startDateTime, endDateTime) {
                 idx: idx,
                 etc1: etc1Value,
                 etc2: etc2Value,
+                etc3: etc3Value,
                 start_time: startDateTime,
                 end_time: endDateTime,
             })
