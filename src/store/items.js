@@ -1,7 +1,7 @@
 import axios from "axios";
 import {API_SERVICE_URI, API_URL} from "../js/constants/Constants.js";
 import {
-    changeBetweenDateMicroTime,
+    changeBetweenDateMicroTime, changeDateFormat,
     changeMicroTimeToDateTime,
     dateformatYmd,
     deleteCookie,
@@ -22,7 +22,9 @@ export const sleepTime = writable('0시간 0분');
 export const milkPowder = writable('0ml');
 export const milkTime = writable('0시간 0분');
 export const babyFood = writable('0ml');
-
+export const lastSleepTime = writable('');
+export const lastFoodTime = writable('');
+export const lastPharmacyTime = writable('');
 
 export const itemIdx = writable();
 export const sDate = writable();
@@ -98,7 +100,7 @@ export async function getItemList(childrenIdx, type, searchDate) {
             let data = apiRes.data
 
             responseCodeProcess(code, message)
-            // console.log(data);
+            console.log(data);
             let milkPowderSum = 0;
             let babyFoodSum = 0;
             let milkTimeSum = 0;
@@ -132,11 +134,20 @@ export async function getItemList(childrenIdx, type, searchDate) {
                 }
             }
 
+            let foodLastTime = getLastTimeWithType(data, ['A', 'B', 'C']);
+            let sleepLastTime = getLastTimeWithType(data, ['F', 'G']);
+            let pharmacyLastTime = getLastTimeWithType(data, ['H']);
+
             milkPowder.set(milkPowderSum + 'ml');
             babyFood.set(babyFoodSum + 'ml');
             milkTime.set(changeMicroTimeToDateTime(milkTimeSum, "0시간 0분"));
             napTime.set(changeMicroTimeToDateTime(napTimeSum, "0시간 0분"));
             sleepTime.set(changeMicroTimeToDateTime(sleepTimeSum, "0시간 0분"));
+            if (foodLastTime !== '') lastFoodTime.set(changeDateFormat(foodLastTime, '', 'dateTime') + ' 전 (' + foodLastTime + ')');
+            if (sleepLastTime !== '') lastSleepTime.set(changeDateFormat(sleepLastTime, '', 'dateTime') + ' 전 (' + sleepLastTime + ')');
+            if (pharmacyLastTime !== '') lastPharmacyTime.set(changeDateFormat(pharmacyLastTime, '', 'dateTime') + ' 전 (' + pharmacyLastTime + ')');
+
+            // console.log(get(lastSleepTime), get(lastFoodTime), get(lastPharmacyTime));
 
             itemList.set(data);
         },
@@ -283,4 +294,17 @@ export function deleteItem(idx) {
             }
         );
     }
+}
+
+function getLastTimeWithType(list, type) {
+    let returnValue = '';
+    for (let i = 0; i < list.length; i++) {
+        if (type.indexOf(list[i].type) >= 0) {
+            // console.log(list[i]);
+            returnValue = list[i].end_time;
+            break;
+        }
+    }
+
+    return returnValue;
 }

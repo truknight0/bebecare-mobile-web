@@ -21,7 +21,15 @@
         sleepTime,
         milkPowder,
         milkTime,
-        babyFood, sDate, eDate, sTime, eTime, itemIdx
+        babyFood,
+        lastFoodTime,
+        lastSleepTime,
+        lastPharmacyTime,
+        sDate,
+        eDate,
+        sTime,
+        eTime,
+        itemIdx
     } from "../../store/items.js";
     import {
         changeDateFormat,
@@ -110,8 +118,11 @@
                         이유식: {$babyFood}
                     </span>
                 </td>
-                <td style="width: 35%; text-align: right;">
+                <td class="right-date-area" style="width: 35%; text-align: right;">
                     <input type="date" class="search-date" bind:value={$searchDate} on:change={searchItemParams($childrenIdx, $type, $searchDate)} />
+                    <p>마지막 식사: {$lastFoodTime}</p>
+                    <p>마지막 잠: {$lastSleepTime}</p>
+                    <p>마지막 약: {$lastPharmacyTime}</p>
                 </td>
             </tr>
         </table>
@@ -248,6 +259,16 @@
     .search-date {
         width: 140px;
         border: none;
+    }
+
+    .right-date-area {
+        width: 35%;
+        text-align: right;
+    }
+
+    .right-date-area p {
+        font-size: 12px;
+        margin: 3px 0;
     }
 
     .category-btn-area ul::-webkit-scrollbar{
