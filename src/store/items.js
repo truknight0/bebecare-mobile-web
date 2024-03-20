@@ -298,7 +298,7 @@ export function deleteItem(idx) {
 
 function getLastTimeWithType(list, type) {
     let returnValue = '';
-    if (list.length > 0) {
+    if (list) {
         for (let i = 0; i < list.length; i++) {
             if (type.indexOf(list[i].type) >= 0) {
                 // console.log(list[i]);
@@ -307,6 +307,5 @@ function getLastTimeWithType(list, type) {
             }
         }
     }
-
     return returnValue;
 }
