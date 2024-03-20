@@ -307,6 +307,5 @@ function getLastTimeWithType(list, type) {
             }
         }
     }
-
     return returnValue;
 }
