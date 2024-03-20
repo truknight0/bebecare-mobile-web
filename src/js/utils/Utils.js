@@ -6,15 +6,15 @@ export function responseCodeProcess(code, message, noDataReset, url) {
         if (code === 1000) {
             if (noDataReset === true) {
                 deleteCookie('token')
-                window.location.href = '/';
+                pageRedirect('/');
             } else {
                 if (url !== "") {
-                    window.location.href = url;
+                    pageRedirect(url);
                 }
             }
         } else if (code === 2000 || code === 2001) {
             // 토큰 인증 실패상태. 무조건 로그인 페이지로 보냄
-            window.location.href = '/';
+            pageRedirect('/');
         }
         return false;
     }
@@ -82,16 +82,17 @@ export function dateformatYmd(d, viewTime) {
     let year = date.getFullYear();
     let month = ("0" + (1 + date.getMonth())).slice(-2);
     let day = ("0" + date.getDate()).slice(-2);
+    let returnValue = year + '-' + month + '-' + day;
 
     if (viewTime === true) {
         let hour = date.getHours();
         let min = date.getMinutes();
         let sec = date.getSeconds();
 
-        return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
+        return returnValue + ' ' + hour + ':' + min + ':' + sec;
     }
 
-    return year + '-' + month + '-' + day;
+    return returnValue;
 }
 
 export function changeDateFormat(sd, ed, format, defaultStr) {
@@ -182,7 +183,7 @@ export function changeMicroTimeToDateTime(mt, str) {
         else return '';
     }
 
-    const cd = Math.ceil((mt) / 24 / 60 / 60 / 1000);
+    const cd = Math.ceil(mt / 24 / 60 / 60 / 1000);
 
     let date = cd - 1;
     let hour = Math.floor((mt / 1000 / 60 / 60) - (date * 24));
