@@ -1,7 +1,7 @@
 import {writable, get} from "svelte/store";
 import {BASE_URL, API_NOAUTH_URI, API_SERVICE_URI, API_URL} from "../js/constants/Constants.js";
 import axios from "axios";
-import {isEmpty, setCookie, getCookie, responseCodeProcess} from "../js/utils/Utils.js";
+import {isEmpty, setCookie, getCookie, responseCodeProcess, pageRedirect} from "../js/utils/Utils.js";
 import {tick} from "svelte";
 
 const isPushAgree = writable(1);
@@ -64,11 +64,12 @@ export function loginUser() {
             // console.log(data)
             // console.log(getCookie('token'))
 
-            if (data.children != null) {
-                window.location.href = '/#/items';
-            } else {
-                window.location.href = '/#/welcome';
+            // 등록된 아이가 있으면 아이템 리스트, 없으면 아이등록 페이지로 이동
+            let uri = '/#/items';
+            if (data.children == null) {
+                uri = '/#/welcome';
             }
+            pageRedirect(uri);
         },
         (error) => {
             console.log(error);
@@ -101,7 +102,7 @@ export function joinInviteCode() {
 
             responseCodeProcess(code, message)
 
-            window.location.href = '/#/items';
+            pageRedirect('/#/items');
         },
         (error) => {
             console.log(error);

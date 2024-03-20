@@ -33,7 +33,8 @@
     } from "../../store/items.js";
     import {
         changeDateFormat,
-        dateformatYmd
+        dateformatYmd,
+        pageRedirect
     } from "../../js/utils/Utils.js";
     import {get, writable} from "svelte/store";
 
@@ -101,7 +102,7 @@
                     <SelectBox options={$childrenList} bold="true" bind:value={$childrenIdx} eventOnChange={changeChildrenItemList}/>
                 </td>
                 <td style="width: 15%; text-align: right;">
-                    <button type="button" class="move-info" onclick="window.location.href='/#/user/info'" >
+                    <button type="button" class="move-info" onclick={pageRedirect('/#/user/info')} >
                         <img src="/images/icon/setting.svg" alt="내 정보" />
                     </button>
                 </td>

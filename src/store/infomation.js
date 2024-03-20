@@ -1,6 +1,6 @@
 import axios from "axios";
 import {API_SERVICE_URI, API_URL} from "../js/constants/Constants.js";
-import {getCookie, responseCodeProcess} from "../js/utils/Utils.js";
+import {getCookie, pageRedirect, responseCodeProcess} from "../js/utils/Utils.js";
 import {get, writable} from "svelte/store";
 
 const isPushAgree = writable(1)
@@ -79,7 +79,7 @@ export function modifyUserInfo() {
 
             responseCodeProcess(code, message)
             // console.log(apiRes);
-            window.location.href = "/#/user/info"
+            pageRedirect('/#/user/info');
         },
         (error) => {
             console.log(error);
@@ -172,7 +172,7 @@ export function deleteUser() {
                 let data = apiRes.data
 
                 responseCodeProcess(code, message)
-                window.location.href = "/";
+                pageRedirect('/');
             },
             (error) => {
                 console.log(error);

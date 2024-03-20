@@ -1,7 +1,7 @@
 import {writable, get} from "svelte/store";
 import {BASE_URL, API_NOAUTH_URI, API_SERVICE_URI, API_URL} from "../js/constants/Constants.js";
 import axios from "axios";
-import {isEmpty, setCookie, getCookie, isParams, responseCodeProcess} from "../js/utils/Utils.js";
+import {isEmpty, setCookie, getCookie, isParams, responseCodeProcess, pageRedirect} from "../js/utils/Utils.js";
 import {tick} from "svelte";
 
 export const childrenIdx = writable();
@@ -104,9 +104,9 @@ export function childrenAdd(returnInfo) {
             if (res) {
                 alert("아이 정보가 등록 되었습니다.");
                 if (isParams('more') === true) {
-                    window.location.href = '/#/user/info';
+                    pageRedirect('/#/user/info');
                 } else {
-                    window.location.href = '/#/items';
+                    pageRedirect('/#/items');
                 }
             }
         },
@@ -145,7 +145,7 @@ export function childrenModify() {
 
             responseCodeProcess(code, message)
 
-            window.location.href = '/#/user/info';
+            pageRedirect('/#/user/info');
         },
         (error) => {
             console.log(error);

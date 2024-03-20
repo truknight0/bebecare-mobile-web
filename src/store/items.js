@@ -5,7 +5,7 @@ import {
     changeMicroTimeToDateTime,
     dateformatYmd,
     deleteCookie,
-    getCookie,
+    getCookie, pageRedirect,
     responseCodeProcess
 } from "../js/utils/Utils.js";
 import {get, writable} from "svelte/store";
@@ -50,7 +50,7 @@ export async function getChildrenList() {
 
             if (data.children_list == null) {
                 alert("잘못된 접근입니다.")
-                window.location.href = '/';
+                pageRedirect('/');
                 return;
             }
 
