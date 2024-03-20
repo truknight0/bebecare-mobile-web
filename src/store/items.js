@@ -100,7 +100,7 @@ export async function getItemList(childrenIdx, type, searchDate) {
             let data = apiRes.data
 
             responseCodeProcess(code, message)
-            console.log(data);
+            // console.log(data);
             let milkPowderSum = 0;
             let babyFoodSum = 0;
             let milkTimeSum = 0;
@@ -298,11 +298,13 @@ export function deleteItem(idx) {
 
 function getLastTimeWithType(list, type) {
     let returnValue = '';
-    for (let i = 0; i < list.length; i++) {
-        if (type.indexOf(list[i].type) >= 0) {
-            // console.log(list[i]);
-            returnValue = list[i].end_time;
-            break;
+    if (list.length > 0) {
+        for (let i = 0; i < list.length; i++) {
+            if (type.indexOf(list[i].type) >= 0) {
+                // console.log(list[i]);
+                returnValue = list[i].end_time;
+                break;
+            }
         }
     }
 
