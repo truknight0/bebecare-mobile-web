@@ -12,7 +12,7 @@
                 {#if moveUrl === ''}
                     <img src="/images/icon/goback.png" on:click={goBack} alt="뒤로가기"/>
                 {:else}
-                    <img src="/images/icon/goback.png" on:click={pageRedirect(moveUrl)} alt="페이지이동"/>
+                    <img src="/images/icon/goback.png" on:click={() => pageRedirect(moveUrl)} alt="페이지이동"/>
                 {/if}
             </td>
             <td style="width: 80%; text-align: center;">

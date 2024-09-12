@@ -217,12 +217,11 @@ export function changeMicroTimeToDateTime(mt, str) {
 export function mailRedirect()
 {
     window.location.href = "mailto:" + DEVELOPER_MAIL;
-    return false;
 }
+
 export function pageRedirect(uri)
 {
-    window.location.href = uri;
-    return false;
+    location.href = uri;
 }
 
 export function setCookie(name, value, exp) {

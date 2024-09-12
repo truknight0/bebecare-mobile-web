@@ -99,57 +99,58 @@ export async function getItemList(childrenIdx, type, searchDate) {
             let message = apiRes.message
             let data = apiRes.data
 
-            responseCodeProcess(code, message)
-            // console.log(data);
+            // responseCodeProcess(code, message)
             let milkPowderSum = 0;
             let babyFoodSum = 0;
             let milkTimeSum = 0;
             let napTimeSum = 0;
             let sleepTimeSum = 0;
-            if (data !== null) {
-                for (let i = 0; i < data.length; i++) {
-                    let etc2Num = 0;
-                    if (data[i].etc2 != null) {
-                        etc2Num = parseInt(data[i].etc2);
-                    }
-                    switch (data[i].type) {
-                        case 'A' :
-                            milkTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
-                            break;
-                        case 'B' :
-                            milkPowderSum += etc2Num;
-                            break;
-                        case 'C' :
-                            babyFoodSum += etc2Num;
-                            break;
-                        case 'F' :
-                            napTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
-                            break;
-                        case 'G' :
-                            sleepTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
-                            break;
-                        default :
-                            break;
+            if (code === 200) {
+                if (data !== null) {
+                    for (let i = 0; i < data.length; i++) {
+                        let etc2Num = 0;
+                        if (data[i].etc2 != null) {
+                            etc2Num = parseInt(data[i].etc2);
+                        }
+                        switch (data[i].type) {
+                            case 'A' :
+                                milkTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
+                                break;
+                            case 'B' :
+                                milkPowderSum += etc2Num;
+                                break;
+                            case 'C' :
+                                babyFoodSum += etc2Num;
+                                break;
+                            case 'F' :
+                                napTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
+                                break;
+                            case 'G' :
+                                sleepTimeSum += parseInt(changeBetweenDateMicroTime(data[i].start_time, data[i].end_time));
+                                break;
+                            default :
+                                break;
+                        }
                     }
                 }
+
+                let foodLastTime = getLastTimeWithType(data, ['A', 'B', 'C']);
+                let sleepLastTime = getLastTimeWithType(data, ['F', 'G']);
+                let pharmacyLastTime = getLastTimeWithType(data, ['H']);
+
+                milkPowder.set(milkPowderSum + 'ml');
+                babyFood.set(babyFoodSum + 'ml');
+                milkTime.set(changeMicroTimeToDateTime(milkTimeSum, "0시간 0분"));
+                napTime.set(changeMicroTimeToDateTime(napTimeSum, "0시간 0분"));
+                sleepTime.set(changeMicroTimeToDateTime(sleepTimeSum, "0시간 0분"));
+                if (foodLastTime !== '') lastFoodTime.set(changeDateFormat(foodLastTime, '', 'dateTime') + ' 전 (' + foodLastTime + ')');
+                if (sleepLastTime !== '') lastSleepTime.set(changeDateFormat(sleepLastTime, '', 'dateTime') + ' 전 (' + sleepLastTime + ')');
+                if (pharmacyLastTime !== '') lastPharmacyTime.set(changeDateFormat(pharmacyLastTime, '', 'dateTime') + ' 전 (' + pharmacyLastTime + ')');
+
+                // console.log(get(lastSleepTime), get(lastFoodTime), get(lastPharmacyTime));
+
+                itemList.set(data);
             }
-
-            let foodLastTime = getLastTimeWithType(data, ['A', 'B', 'C']);
-            let sleepLastTime = getLastTimeWithType(data, ['F', 'G']);
-            let pharmacyLastTime = getLastTimeWithType(data, ['H']);
-
-            milkPowder.set(milkPowderSum + 'ml');
-            babyFood.set(babyFoodSum + 'ml');
-            milkTime.set(changeMicroTimeToDateTime(milkTimeSum, "0시간 0분"));
-            napTime.set(changeMicroTimeToDateTime(napTimeSum, "0시간 0분"));
-            sleepTime.set(changeMicroTimeToDateTime(sleepTimeSum, "0시간 0분"));
-            if (foodLastTime !== '') lastFoodTime.set(changeDateFormat(foodLastTime, '', 'dateTime') + ' 전 (' + foodLastTime + ')');
-            if (sleepLastTime !== '') lastSleepTime.set(changeDateFormat(sleepLastTime, '', 'dateTime') + ' 전 (' + sleepLastTime + ')');
-            if (pharmacyLastTime !== '') lastPharmacyTime.set(changeDateFormat(pharmacyLastTime, '', 'dateTime') + ' 전 (' + pharmacyLastTime + ')');
-
-            // console.log(get(lastSleepTime), get(lastFoodTime), get(lastPharmacyTime));
-
-            itemList.set(data);
         },
         (error) => {
             console.log(error);

@@ -102,7 +102,7 @@
                     <SelectBox options={$childrenList} bold="true" bind:value={$childrenIdx} eventOnChange={changeChildrenItemList}/>
                 </td>
                 <td style="width: 15%; text-align: right;">
-                    <button type="button" class="move-info" onclick={pageRedirect('/#/user/info')} >
+                    <button type="button" class="move-info" on:click={() => pageRedirect('/#/user/info')} >
                         <img src="/images/icon/setting.svg" alt="내 정보" />
                     </button>
                 </td>
@@ -134,7 +134,7 @@
                         {#if $type === li.class}
                             <button class="{li.class} selected">{li.name}</button>
                         {:else}
-                            <button class="{li.class}" on:click={searchItemParams($childrenIdx, li.class, $searchDate)}>{li.name}</button>
+                            <button class="{li.class}" on:click={() => searchItemParams($childrenIdx, li.class, $searchDate)}>{li.name}</button>
                         {/if}
                     </li>
                 {/each}
@@ -159,7 +159,7 @@
                                 {#if item.end_time === null}
                                     <div class="item-head item-head-ing">
                                         <span>{item.start_time}</span>
-                                        <button on:click={deleteItem(item.idx)}><img src="/images/icon/icon-delete-white.png" alt="삭제"></button>
+                                        <button on:click={() => deleteItem(item.idx)}><img src="/images/icon/icon-delete-white.png" alt="삭제"></button>
                                     </div>
                                     <div class="item-content item-content-ing">
                                         <div class="item-content-inner">
@@ -167,19 +167,19 @@
                                             <div style="margin-top: 10px;">
                                                 {#if item.type === 'A'}
                                                     <RadioButtonGray name="etc1_{item.idx}" title="선택:" buttons={etc1Buttons} bind:value={item.etc1} />
-                                                    <button class="item-complete-button" on:click={modifyItem(item.idx, item.start_time, dateformatYmd('now', true))}>완료</button>
+                                                    <button class="item-complete-button" on:click={() => modifyItem(item.idx, item.start_time, dateformatYmd('now', true))}>완료</button>
                                                 {:else if item.type === 'F'}
-                                                    <button class="item-complete-button" on:click={modifyItem(item.idx, item.start_time, dateformatYmd('now', true))}>완료</button>
+                                                    <button class="item-complete-button" on:click={() => modifyItem(item.idx, item.start_time, dateformatYmd('now', true))}>완료</button>
                                                 {:else if item.type === 'G'}
-                                                    <button class="item-complete-button" on:click={modifyItem(item.idx, item.start_time, dateformatYmd('now', true))}>완료</button>
+                                                    <button class="item-complete-button" on:click={() => modifyItem(item.idx, item.start_time, dateformatYmd('now', true))}>완료</button>
                                                 {/if}
                                             </div>
                                         </div>
                                     </div>
                                 {:else}
                                     <div class="item-head item-head-complete">
-                                        <span on:click={toggleModal(item.start_time, item.end_time, item.idx)}>{item.start_time}</span>
-                                        <button on:click={deleteItem(item.idx)}><img src="/images/icon/icon-delete-white.png" alt="삭제"></button>
+                                        <span on:click={() => toggleModal(item.start_time, item.end_time, item.idx)}>{item.start_time}</span>
+                                        <button on:click={() => deleteItem(item.idx)}><img src="/images/icon/icon-delete-white.png" alt="삭제"></button>
                                     </div>
                                     <div class="item-content item-content-complete">
                                         <div class="item-content-inner">
@@ -193,16 +193,16 @@
                                             <div style="margin-top: 10px;">
                                                 {#if item.type === 'A'}
                                                     <RadioButtonGray name="etc1_{item.idx}" title="선택:" buttons={etc1Buttons} bind:value={item.etc1} />
-                                                    <button class="item-modify-button" on:click={modifyItem(item.idx)}>수정</button>
+                                                    <button class="item-modify-button" on:click={() => modifyItem(item.idx)}>수정</button>
                                                 {:else if item.type === 'H'}
                                                     <RadioButtonGray name="etc3_{item.idx}" title="선택:" buttons={etc3Buttons} bind:value={item.etc3} />
-                                                    <button class="item-modify-button" on:click={modifyItem(item.idx)}>수정</button>
+                                                    <button class="item-modify-button" on:click={() => modifyItem(item.idx)}>수정</button>
                                                 {:else if item.type === 'B'}
                                                     <InputType2 title="먹은 양:" name="etc2_{item.idx}" bind:value={item.etc2} numberOnly="Y" unit="ml" />
-                                                    <button class="item-modify-button" on:click={modifyItem(item.idx)}>수정</button>
+                                                    <button class="item-modify-button" on:click={() => modifyItem(item.idx)}>수정</button>
                                                 {:else if item.type === 'C'}
                                                     <InputType2 title="먹은 양:" name="etc2_{item.idx}" bind:value={item.etc2} numberOnly="Y" unit="ml" />
-                                                    <button class="item-modify-button" on:click={modifyItem(item.idx)}>수정</button>
+                                                    <button class="item-modify-button" on:click={() => modifyItem(item.idx)}>수정</button>
                                                 {/if}
                                             </div>
                                         </div>

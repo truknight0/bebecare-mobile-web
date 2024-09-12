@@ -17,9 +17,7 @@
     import {changeDateFormat, changePhoneFormat, mailRedirect, pageRedirect} from "../../js/utils/Utils.js";
     import TextButton from "../../components/common/TextButton.svelte";
 
-    onMount(() => {
-        getUserInfo()
-    })
+    getUserInfo()
 
 </script>
 
@@ -32,7 +30,7 @@
         <p>
             <b>{$name}</b>
             <span class="role-span">{$role}</span>
-            <button type="button" class="modify" onclick="location.href='/#/user/modify'">수정</button>
+            <button type="button" class="modify" on:click={() => pageRedirect('/#/user/modify')}>수정</button>
         </p>
         <span class="phone-span">{changePhoneFormat($phone)}</span>
     </div>
@@ -44,7 +42,7 @@
                     <b>{child.name}</b>
                     <span class="birthday-span">{changeDateFormat(child.birthday, null, 'week')} / {changeDateFormat(child.birthday, null, 'month')}</span>
                     {#if $userType === 'M'}
-                        <button type="button" class="modify" on:click={pageRedirect('/#/children/modify/' + child.idx)}>수정</button>
+                        <button type="button" class="modify" on:click={() => pageRedirect('/#/children/modify/' + child.idx)}>수정</button>
                     {/if}
                 </p>
                 <span class="sub-info-span">몸무게 {child.weight}kg / 키 {child.tall}cm / 머리둘레 {child.head_size}cm</span>
@@ -53,7 +51,8 @@
     {/if}
     {#if $userType === 'M'}
         <div class="children-add-button">
-            <button type="button" onclick="location.href='/#/children/add?more'">아이 추가하기</button>
+<!--            <button type="button" onclick="location.href='/#/children/add?more'">아이 추가하기</button>-->
+            <button type="button" on:click={() => pageRedirect('/#/children/add?more')}>아이 추가하기</button>
         </div>
     {/if}
     <div class="empty-area"></div>
